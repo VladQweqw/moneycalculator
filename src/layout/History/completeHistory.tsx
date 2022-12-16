@@ -1,9 +1,8 @@
 
-import NoContent from './noContent'
+import NoContent from '../Components/noContent'
 import { useContext } from 'react'
-import { BalanceContext } from '../context'
-import { HistoryItem } from './history'
-import { historyType } from '../utils/types'
+import { BalanceContext } from '../../context'
+import { HistoryComponent } from './historyComponents';
 
 export default function CompleteHistory() {
    const {history, getData} = useContext(BalanceContext);
@@ -16,14 +15,7 @@ export default function CompleteHistory() {
             <h1 className="section-title">Complete History</h1>
         </header>
 
-         <div className="history-wrapper complete-history">
-                {history && history.map((item: historyType, index: number) => {
-                    return <HistoryItem
-                        {...item}
-                        key={index}
-                    />
-                })}
-         </div>
+        <HistoryComponent history={history} />
          
          <button className='primary-btn clear-data' onClick={() => {
             localStorage.removeItem('balance')

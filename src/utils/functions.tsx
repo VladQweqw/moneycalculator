@@ -1,11 +1,3 @@
-export function saveToLocal(name: string, data: any) {
-    localStorage.setItem(name, data);
-}
-export function getFromLocal(name: string): any {
-    return localStorage.getItem(name);
-    
-}
-
 export const currencyValues: any = {
     'RON': 1,
     'EUR': 4.96, 
@@ -19,6 +11,33 @@ export const phrases = [
     'Esti serif',
     'Lautar'
  ]
+
+export const parent = {
+    animate: {
+        transition: {
+            staggerChildren: .1
+        }
+    }
+}
+export const child = {
+    initial: {
+        translateY: '100px',
+        scale: 0 
+    },
+    animate: {
+        translateY: '0px',
+        scale: 1
+    }
+}
+
+export function saveToLocal(name: string, data: any) {
+    localStorage.setItem(name, data);
+}
+export function getFromLocal(name: string): any {
+    return localStorage.getItem(name);
+    
+}
+
 
 export function calculateTotalBalance(data: any) {
     const {type, total, currency} = data;

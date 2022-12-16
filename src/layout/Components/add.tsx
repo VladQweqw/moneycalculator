@@ -1,9 +1,9 @@
 import {useRef, useState, useContext} from 'react'
 import { motion} from 'framer-motion'
 import { useNavigate } from 'react-router'
-import { BalanceContext } from '../context'
-import { saveToLocal, getFromLocal, calculateTotalBalance } from '../utils/functions'
-import { historyType } from '../utils/types'
+import { BalanceContext } from '../../context'
+import { saveToLocal, getFromLocal, calculateTotalBalance } from '../../utils/functions'
+import { historyType } from '../../utils/types'
 
 export default function Add() {
    const navigate = useNavigate()
@@ -13,7 +13,7 @@ export default function Add() {
    const reason = useRef<HTMLInputElement | null>(null);
    const currencyRef = useRef<HTMLSelectElement | null>(null)
     
-   const {setHistory, history, setTotalBalance} = useContext(BalanceContext);
+   const {setHistory, setTotalBalance} = useContext(BalanceContext);
 
     function createPayment() {
         if(isNaN(parseInt( amount.current!.value))) return alert('add a number');

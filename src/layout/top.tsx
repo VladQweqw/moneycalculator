@@ -1,7 +1,7 @@
 import React,{} from 'react'
 import { useContext } from 'react'
 import { BalanceContext } from '../context'
-import NoContent from './noContent';
+import NoContent from './Components/noContent';
 
 export default function Top() {
     const {tops} = useContext(BalanceContext);
