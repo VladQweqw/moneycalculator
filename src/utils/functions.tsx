@@ -1,8 +1,18 @@
 export const currencyValues: any = {
     'RON': 1,
     'EUR': 4.96, 
-    'USD': 4.36,
+    'USD': 4.63,
 }
+
+export function currencyConvertor(total: number, from: string, to: string): string {
+    let convertedTotal = 0;
+    
+    let fromToRON = (total * currencyValues[from])
+    convertedTotal = fromToRON / currencyValues[to];
+
+    return Number.parseFloat(convertedTotal.toString()).toFixed(2);
+}
+
 
 export const phrases = [
     'Ne manca foamea',
@@ -69,3 +79,4 @@ export function formatDate(date: number): string {
         hours
     }:${minutes}`;
 }
+

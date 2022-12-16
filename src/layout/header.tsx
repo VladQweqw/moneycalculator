@@ -1,8 +1,8 @@
-import {useContext} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router'
 import { BalanceContext } from '../context'
 import { motion } from 'framer-motion'
-import { currencyValues } from '../utils/functions'
+import { currencyValues, currencyConvertor } from '../utils/functions'
 import { phrases } from '../utils/functions'
 
 export default function Header() {
@@ -23,7 +23,7 @@ export default function Header() {
       }
    }
    
-   let i = 0;
+   let from = 0, to = 1;
    return(
       <section className="header section">
          <h1 className="section-title">{
@@ -44,13 +44,21 @@ export default function Header() {
 
                }}
                className="total-money accent" onClick={(e) => {
-                  if(i >= 3) i = 0;
-                  let currency: any = Object.entries(currencyValues)[i];
+                  const values = Object.keys(currencyValues);
+                  const elem = (e.target as HTMLElement);
+                  
+                  if(from == values.length - 1) to = 0
+                  if(from >= values.length) from = 0
+                  
+                  elem.innerText = `${
+                     currencyConvertor(
+                        parseFloat(elem.innerText.slice(0, -3)), values[from], values[to])
+                  }${values[to]}`
 
-                  (e.target as HTMLElement).innerText = 
-                  `${Math.floor(totalBalance / currency[1])}${currency[0]}`
-                  i++;
-               }}>{Math.floor(totalBalance)}RON</motion.h1>
+                  from++; to++;
+               }}>{
+                  totalBalance
+               }RON</motion.h1>
             </div>
 
             <button className="primary-btn add-payment" onClick={() => {

@@ -1,5 +1,3 @@
-import React,{} from 'react'
-
 import Header from './header'
 import History from './History/history'
 import Top from './top'
