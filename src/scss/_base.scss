@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+img {
+    max-width: 100%;
+}
+
+button, input, textarea {
+    outline: none;
+    border: none;
+    font-family: $ff-main;
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    background-color: $black;
+    color: white;
+    font-family: $ff-main;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1vw;
+
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 0;
+    max-width: 600px;
+    min-height: 100vh;
+    width: 100%;
+    
+}
+
+.section {
+    display: grid;
+    gap: 5px;
+    
+    div {
+        background-color: $contrast;
+        border-radius: 8px;
+        padding: 2vw 1vw;
+        
+    }
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1vw;
+        align-items: center;
+
+        .section-optional {
+            cursor: pointer;
+            font-size: 1rem;
+            color: gray;
+            transition: 200ms ease;
+        }
+        
+        .section-optional:hover {
+            color: $accent;
+        }
+    }
+
+    .section-title {
+        font-size: 1rem;
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+}
+
+.primary-btn {
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding: .6em 1em;
+    cursor: pointer;
+    width: fit-content;
+    background: linear-gradient(90deg, #294ECE 0%, #4789AD 100%);
+    font-size: 1.15rem;
+    background-size: 400%;
+    background-position: 10%;
+    transition: 200ms ease;
+}
+.primary-btn:hover {
+    background-position: 50%;
+}
+.primary-btn:active {
+    scale: .95;
+}
+
+.accent {
+    color: $accent;
+}

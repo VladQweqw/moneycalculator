@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import {Route, Routes} from 'react-router'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Home from './layout/home'
+import Add from './layout/add'
+import CompleteHistory from './layout/completeHistory'
+import { BalanceContext } from './context'
+import { BrowserRouter } from 'react-router-dom'
+import NoContent from './layout/noContent'
+import { historyType } from './utils/types'
+import { getFromLocal } from './utils/functions'
+
+export default function App() {
+   const [totalBalance, setTotalBalance] = useState<number>(0)
+   const [history, setHistory] = useState<historyType | []>([])
+   const [tops, setTops] = useState<historyType | []>([])
+
+   useEffect(() => {
+      getData()
+   }, [])
+   
+   function getData() {
+      setHistory(JSON.parse(getFromLocal('history')) || []);
+      setTotalBalance(JSON.parse(getFromLocal('balance')) || 0);
+      setTops(JSON.parse(getFromLocal('tops')) || []);
+   }
+
+   return(
+    <BalanceContext.Provider value={{
+      totalBalance,
+      setTotalBalance,
+      history,
+      setHistory,
+      tops,
+      setTops,
+      getData
+    }}>
+      <BrowserRouter>
+         <Routes>
+               <Route path='/' element={<Home />}>
+                  <Route path='add' element={<Add />}></Route>
+
+               </Route>
+               
+               <Route path='/history' element={<CompleteHistory />}></Route>
+               <Route path='/tops'></Route>         
+            <Route path='*' element={<NoContent />}></Route>
+         </Routes>
+      </BrowserRouter>
+    </BalanceContext.Provider>
+   )
 }
-
-export default App;

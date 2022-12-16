@@ -1,0 +1,19 @@
+import React,{} from 'react'
+
+import Header from './header'
+import History from './history'
+import Top from './top'
+import { Outlet } from 'react-router'
+
+export default function Home() {
+
+   return(
+    <>
+        <Outlet />
+        <Header />
+        <History />
+        <Top />
+
+    </>
+   )
+}
