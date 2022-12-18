@@ -1,3 +1,4 @@
+
 export type historyType = {
     type: 'SUBSTRACT' | 'ADD',
     reason: string,
@@ -6,4 +7,9 @@ export type historyType = {
     currency: string,
 }
 
+export type historyCollection = {
+    date: number,
+    logs: historyType[];
+
+}
 export type currencyType = 'RON' | 'EUR' | 'USD';

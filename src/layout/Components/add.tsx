@@ -3,7 +3,7 @@ import { motion} from 'framer-motion'
 import { useNavigate } from 'react-router'
 import { BalanceContext } from '../../context'
 import { saveToLocal, getFromLocal, calculateTotalBalance } from '../../utils/functions'
-import { historyType } from '../../utils/types'
+import { historyType, historyCollection } from '../../utils/types'
 
 export default function Add() {
    const navigate = useNavigate()
@@ -18,6 +18,7 @@ export default function Add() {
     function createPayment() {
         if(isNaN(parseInt( amount.current!.value))) return alert('add a number');
         
+        
         let obj: historyType = {
             type: !type ? 'ADD':'SUBSTRACT',
             reason: reason.current!.value || 'Spaga',
@@ -25,6 +26,7 @@ export default function Add() {
             date: new Date().getTime(),
             currency: currencyRef.current!.value,
         }
+        
 
         let prevData = JSON.parse(getFromLocal('history')) || [];
         prevData ? saveToLocal('history', JSON.stringify([ obj, ...prevData])) : saveToLocal('history', JSON.stringify([obj]));

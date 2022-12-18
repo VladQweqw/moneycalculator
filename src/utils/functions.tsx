@@ -65,18 +65,42 @@ export function calculateTotalBalance(data: any) {
     return balance;
 }
 
-export function formatDate(date: number): string {
-    const d = new Date(date);
-    const months = ['Dec', 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
-    const hours = d.getHours().toString().padStart(2, '0')
-    const minutes = d.getMinutes().toString().padStart(2, '0')
-    
+export function getDateFromMs(ms: number): {
+    year: number,
+    day: number,
+    minutes: string,
+    hours: string,
+    month: number,
+    formatedMonth: string,
+    formatedDay: string,
+    stringDate: () => string,
+} {
+    const date = new Date(ms);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'];
 
-    const day = d.getDay().toString().padStart(2, '0')
-    const month = months[d.getMonth()]
+    let year = date.getFullYear()
+    let day = date.getDate()
+    let minutes = date.getMinutes().toString().padStart(2, '0')
+    let hours = date.getHours().toString().padStart(2, '0')
+    let month = date.getMonth()
 
-    return `${day} ${month} ${d.getFullYear()}, ${
-        hours
-    }:${minutes}`;
+    let formatedDay = day.toString().padStart(2, '0');
+    let formatedMonth = months[month];
+
+    function stringDate(): string {
+        return `${formatedDay} ${formatedMonth} ${year}`
+    }
+
+    return {
+        year,
+        day,
+        minutes,
+        hours,
+        month,
+        formatedMonth,
+        formatedDay,
+        stringDate,
+    }
 }
+
 

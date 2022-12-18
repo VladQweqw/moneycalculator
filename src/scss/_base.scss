@@ -56,7 +56,7 @@ body {
     div {
         background-color: $contrast;
         border-radius: 8px;
-        padding: 2vw 1vw;
+        padding: .5em;
         
     }
     .section-header {
@@ -108,3 +108,23 @@ body {
 .accent {
     color: $accent;
 }
+
+ /* width */
+ ::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: $contrast;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $accent;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: $accent;
+    } 
