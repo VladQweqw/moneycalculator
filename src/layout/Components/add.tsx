@@ -22,7 +22,7 @@ export default function Add() {
         let obj: historyType = {
             type: !type ? 'ADD':'SUBSTRACT',
             reason: reason.current!.value || 'Spaga',
-            total: parseInt(amount.current!.value),
+            total: Math.abs(parseInt(amount.current!.value)),
             date: new Date().getTime(),
             currency: currencyRef.current!.value,
         }
