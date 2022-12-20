@@ -12,6 +12,7 @@ export default function Add() {
    const amount = useRef<HTMLInputElement | null>(null);
    const reason = useRef<HTMLInputElement | null>(null);
    const currencyRef = useRef<HTMLSelectElement | null>(null)
+   const source = useRef<HTMLSelectElement | null>(null)
     
    const {setHistory, setTotalBalance} = useContext(BalanceContext);
 
@@ -25,12 +26,13 @@ export default function Add() {
             total: Math.abs(parseInt(amount.current!.value)),
             date: new Date().getTime(),
             currency: currencyRef.current!.value,
+            // source: source.current!.value,  
         }
         
 
         let prevData = JSON.parse(getFromLocal('history')) || [];
         prevData ? saveToLocal('history', JSON.stringify([ obj, ...prevData])) : saveToLocal('history', JSON.stringify([obj]));
-
+        
         setHistory([obj, ...prevData]);
 
         setTotalBalance(calculateTotalBalance(obj))

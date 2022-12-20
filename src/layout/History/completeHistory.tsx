@@ -2,6 +2,7 @@ import NoContent from '../Components/noContent'
 import { useContext } from 'react'
 import { BalanceContext } from '../../context'
 import { HistoryComponent } from './historyComponents';
+import { getFromLocal } from '../../utils/functions';
 
 export default function CompleteHistory() {
    const {history, getData} = useContext(BalanceContext);
@@ -22,7 +23,8 @@ export default function CompleteHistory() {
             localStorage.removeItem('tops')
             
             getData()
-         }} id='clear-data'>clear all data</button>
+         }} id='clear-data'>Clear all data</button>
+   
 
       </section>
    )

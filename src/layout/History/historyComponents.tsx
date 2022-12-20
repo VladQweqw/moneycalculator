@@ -47,12 +47,16 @@ export const HistoryComponent = (data: any) => {
                         
             if(acc[dateFormat]?.date) {                
                 acc[dateFormat].logs = [...acc[dateFormat].logs, cur] 
-                acc[dateFormat].total += cur.total
+                if(cur.type === 'ADD') {
+                    acc[dateFormat].total += cur.total * currencyValues[cur.currency]
+                }else {
+                    acc[dateFormat].total -= cur.total * currencyValues[cur.currency]
+                }
             }else {
                 acc[dateFormat] = {
                     date: cur.date,
-                    total: 0,
-                    logs: []
+                    total: cur.type === 'ADD' ? cur.total * currencyValues[cur.currency] : -cur.total * currencyValues[cur.currency],
+                    logs: [cur]
                 };
             }
                            
@@ -75,7 +79,7 @@ export const HistoryComponent = (data: any) => {
                                 {item[0]}
                             </h3>
                             <h3 className="history-section-total">
-                                {item[1].total}RON
+                                {item[1].total.toFixed(2)}RON
                             </h3>
                         </header>
                             <motion.div 
