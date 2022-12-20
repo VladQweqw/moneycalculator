@@ -58,7 +58,7 @@ export const HistoryItem = (data: {
                     }}>
                     {type === 'ADD' ? '+': '-'}
                     {total}{currency}</h1>
-                    <p className="source-name">{source}</p>
+                    <p className="source-name">{source || 'none'}</p>
                 </div>
             </div>
 

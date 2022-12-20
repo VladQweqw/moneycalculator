@@ -158,11 +158,12 @@ body {
 }
 
 .history {
-  overflow-x: hidden;
   max-height: 500px;
   width: 100%;
   display: grid;
   gap: 1rem;
+  overflow-x: hidden;
+  overflow: scroll;
 }
 .history .history-section {
   position: relative;
@@ -243,7 +244,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 200px;
+  width: 100px;
 }
 .history .history-item-wrapper .item-total {
   font-size: calc(1rem + 1vmin);
@@ -265,10 +266,7 @@ body {
   padding: 1vw;
 }
 .complete-history-wrapper .history {
-  max-height: 100%;
-  min-height: 400px;
   height: 100%;
-  overflow-y: auto !important;
 }
 .complete-history-wrapper .history .history-item-wrapper {
   height: auto;
