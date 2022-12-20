@@ -1,14 +1,38 @@
 import { historyType } from "../../utils/types";
-import { FC } from "react";
+import {  useState } from "react";
 import { motion } from 'framer-motion'
-import { currencyConvertor, currencyValues, getDateFromMs } from "../../utils/functions";
+import { currencyConvertor, currencyValues, getDateFromMs, saveToLocal } from "../../utils/functions";
 import { child, parent } from "../../utils/functions";
-
-export const HistoryItem: FC<historyType> = ({type, reason, total, date, currency}): JSX.Element => {
+import { useContext } from "react";
+import { BalanceContext } from "../../context";
+export const HistoryItem = (data: {
+    removePayment: (date: number) => void,
+    type: 'ADD' | 'SUBSTRACT',
+    reason: string,
+    total: number,
+    date: number,
+    currency: string,
+    source: string
+}): JSX.Element => {
    let from = 0, to = 1;
+    const {type, reason, total, date, currency, source, removePayment} = data;
+
+    const [isOpen, setIsOpen] = useState(false)
     
     return(
         <motion.div
+        onMouseDown={(e) => {
+           if(
+            (e.target as HTMLElement).classList.contains('history-item-context') ||
+            (e.target as HTMLElement).classList.contains('fa-x')
+            ) {
+                removePayment(date)
+            }else {
+                setIsOpen(!isOpen)  
+
+            }
+
+        }}
         variants={child}
         className={`history-item-wrapper`}>
             <p className="item-date">
@@ -17,30 +41,38 @@ export const HistoryItem: FC<historyType> = ({type, reason, total, date, currenc
             <div 
             className={`history-item ${type ==='ADD' ? 'item-add': 'item-substract'}`}>
                 <h1 className="item-reason">{reason}</h1>
-                <h1 className="item-total" onClick={(e) => {
-                    const elem = (e.target as HTMLElement);
-                    const values = Object.keys(currencyValues);
+                <div className="currency-wrapper">
+                    <h1 className="item-total" onClick={(e) => {
+                        const elem = (e.target as HTMLElement);
+                        const values = Object.keys(currencyValues);
 
-                    if(from == values.length - 1) to = 0
-                    if(from >= values.length) from = 0                    
-    
-                     elem.innerText = `+${
-                        currencyConvertor(
-                           parseFloat(elem.innerText.slice(1, -3)), values[from], values[to])
-                     }${values[to]}`
+                        if(from == values.length - 1) to = 0
+                        if(from >= values.length) from = 0                    
+                        
+                        elem.innerText = `+${
+                            currencyConvertor(
+                            parseFloat(elem.innerText.slice(1, -3)), values[from], values[to])
+                        }${values[to]}`
 
-                     from++; to++;                    
-                }}>
-                {type === 'ADD' ? '+': '-'}
-                {total}{currency}</h1>
+                        from++; to++;                    
+                    }}>
+                    {type === 'ADD' ? '+': '-'}
+                    {total}{currency}</h1>
+                    <p className="source-name">{source}</p>
+                </div>
             </div>
 
+            <div className={`${isOpen ? 'history-item-context history-item-context-active': 'history-item-context'}`}>
+                <i className="fas fa-x"></i>
+            </div>
         </motion.div>
     )
 
 }
 
 export const HistoryComponent = (data: any) => {        
+    const { setHistory } = useContext(BalanceContext)
+
     const dates = data.data?.reduce(
         (acc: any, cur: historyType) => {            
             let dateFormat = getDateFromMs(cur.date).stringDate();
@@ -65,6 +97,16 @@ export const HistoryComponent = (data: any) => {
 
     const datesArr = dates && Object.entries(dates);
     
+    function removePayment(date: number) {
+        
+        const newPayments = data.data.filter((item: historyType) => {
+            return item.date !== date
+        })
+
+        saveToLocal('history', JSON.stringify(newPayments))
+        setHistory(newPayments)
+        
+    }
 
     return(
         <div
@@ -88,7 +130,7 @@ export const HistoryComponent = (data: any) => {
                                 initial={'initial'}
                             className="history-items">
                                 {item[1].logs.map((item: historyType, index: number) => {
-                                    return <HistoryItem key={index} {...item} />
+                                    return <HistoryItem key={index} removePayment={removePayment} {...item} />
                                 })}
                             </motion.div>
                         </div>

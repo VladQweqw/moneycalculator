@@ -7,13 +7,13 @@ import CompleteHistory from './layout/History/completeHistory'
 import { BalanceContext } from './context'
 import { BrowserRouter } from 'react-router-dom'
 import NoContent from './layout/Components/noContent'
-import { historyType } from './utils/types'
+import { SourceType, historyType } from './utils/types'
 import { getFromLocal } from './utils/functions'
 
 export default function App() {
-   const [totalBalance, setTotalBalance] = useState<number>(0)
    const [history, setHistory] = useState<historyType | []>([])
    const [tops, setTops] = useState<historyType | []>([])
+   const [sources, setSources] = useState<SourceType[] | []>([])
 
    useEffect(() => {
       getData()
@@ -21,25 +21,24 @@ export default function App() {
    
    function getData() {
       setHistory(JSON.parse(getFromLocal('history')) || []);
-      setTotalBalance(JSON.parse(getFromLocal('balance')) || 0);
       setTops(JSON.parse(getFromLocal('tops')) || []);
+      setSources(JSON.parse(getFromLocal('sources')) || [])
    }
 
    return(
     <BalanceContext.Provider value={{
-      totalBalance,
-      setTotalBalance,
       history,
       setHistory,
       tops,
       setTops,
-      getData
+      getData,
+      setSources,
+      sources,
     }}>
       <BrowserRouter>
          <Routes>
                <Route path='/' element={<Home />}>
                   <Route path='add' element={<Add />}></Route>
-
                </Route>
                
                <Route path='/history' element={<CompleteHistory />}></Route>

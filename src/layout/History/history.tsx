@@ -5,11 +5,9 @@ import NoContent from '../Components/noContent';
 import { HistoryComponent } from './historyComponents';
 
 export default function History() {
-   const { history } = useContext(BalanceContext);
-   console.log(history);
+   const { history } = useContext(BalanceContext);   
    
    if(history == false) return <NoContent />
-
    return(
     <section className="history section">
         <header className="section-header">

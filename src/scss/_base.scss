@@ -49,6 +49,14 @@ body {
     
 }
 
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 95vh;
+    
+}
 .section {
     display: grid;
     gap: 5px;

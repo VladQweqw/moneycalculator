@@ -4,17 +4,17 @@ import Top from './top'
 import { Outlet } from 'react-router'
 import { useContext } from 'react'
 import { BalanceContext } from '../context'
-import { saveToLocal } from '../utils/functions'
+import Sources from './sources'
 export default function Home() {
    const { history } = useContext(BalanceContext)
 
    return(
-    <>
+    <main id='main'>
         <Outlet />
         <Header />
         <HistoryComponent {...history} />
-        <Top />
-
-    </>
+        {/* <Top /> */}
+        <Sources />
+    </main>
    )
 }

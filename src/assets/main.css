@@ -50,6 +50,14 @@ body {
   width: 100%;
 }
 
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 95vh;
+}
+
 .section {
   display: grid;
   gap: 5px;
@@ -151,7 +159,7 @@ body {
 
 .history {
   overflow-x: hidden;
-  max-height: 400px;
+  max-height: 500px;
   width: 100%;
   display: grid;
   gap: 1rem;
@@ -178,13 +186,53 @@ body {
   outline: 1px solid rgba(255, 255, 255, 0.5019607843);
   max-height: 100%;
 }
+.history .history-item-wrapper {
+  position: relative;
+}
+.history .history-item-wrapper .history-item-context {
+  position: absolute;
+  top: 60%;
+  height: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 100px;
+  height: 50px;
+  border-radius: 2px;
+  background-color: #1E1E1E;
+  transition: 200ms ease;
+  text-align: center;
+  opacity: 1;
+  display: grid;
+  place-items: center;
+  position: none;
+  color: red;
+  cursor: pointer;
+}
+.history .history-item-wrapper .history-item-context:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.history .history-item-wrapper .history-item-context-active {
+  transform: translate(-50%, -50%) scale(1);
+}
+.history .history-item-wrapper .currency-wrapper {
+  background-color: transparent;
+}
+.history .history-item-wrapper .currency-wrapper .source-name {
+  color: rgba(255, 255, 255, 0.5019607843);
+  text-align: right;
+}
 .history .history-item-wrapper .history-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   border-radius: 6px;
   justify-content: space-between;
-  padding: 1rem 0.5rem;
+  cursor: pointer;
+  padding: 0.25em 0.5rem;
+  transition: 200ms ease;
+}
+.history .history-item-wrapper .history-item:hover {
+  transform: translateY(2px);
 }
 .history .history-item-wrapper .item-date {
   color: rgba(255, 255, 255, 0.5019607843);
@@ -192,6 +240,10 @@ body {
 }
 .history .history-item-wrapper .item-reason {
   font-size: calc(1rem + 1vmin);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
 }
 .history .history-item-wrapper .item-total {
   font-size: calc(1rem + 1vmin);
@@ -296,27 +348,6 @@ body {
   display: flex;
   gap: 0.5rem;
 }
-.add-wrapper .add-container .add-form .input:first-child #currency {
-  outline: none;
-  max-width: 75px;
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  color: white;
-  font-size: 1.15rem;
-  outline: 2px solid #3CBBE3;
-  border-radius: 4px;
-  text-align: center;
-  transition: 200ms ease;
-}
-.add-wrapper .add-container .add-form .input:first-child #currency .currency-item {
-  background-color: #1E1E1E;
-  outline: none;
-  border: none;
-}
-.add-wrapper .add-container .add-form .input:first-child #currency .currency-item:hover {
-  background-color: #3CBBE3;
-}
 .add-wrapper .add-container .add-form .input-differ {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -367,8 +398,90 @@ body {
   font-size: 1.25rem;
 }
 
+.select {
+  outline: none;
+  max-width: 75px;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 1.15rem;
+  outline: 2px solid #3CBBE3;
+  border-radius: 4px;
+  text-align: center;
+  transition: 200ms ease;
+}
+.select .currency-item {
+  background-color: #1E1E1E;
+  outline: none;
+  border: none;
+}
+.select .currency-item:hover {
+  background-color: #3CBBE3;
+}
+
+#sources {
+  max-width: 100%;
+  padding: 1rem;
+}
+
 .total-money:active, .item-total:active {
   scale: 0.8;
+}
+
+.sources {
+  display: grid;
+  gap: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 300px;
+}
+.sources .source {
+  background-color: #333837;
+  transition: 200ms ease;
+  outline: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sources .source .remove-source {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+}
+.sources .source .remove-source i {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5019607843);
+  transition: 200ms ease;
+}
+.sources .source .remove-source i:active {
+  scale: 0.9;
+}
+.sources .source .remove-source i:hover {
+  color: rgb(197, 33, 33);
+}
+.sources .source .source-name {
+  color: rgba(255, 255, 255, 0.5019607843);
+}
+.sources .source .source-total {
+  color: #3CBBE3;
+  font-size: 1.75rem;
+}
+.sources .no-source {
+  background-color: transparent;
+  text-align: center;
+  justify-content: center;
+  font-weight: 300;
+  padding: 1rem;
+}
+.sources .source:hover {
+  background-color: #1E1E1E;
+  outline: 2px solid #333837;
+}
+.sources .add-source {
+  width: 100%;
 }
 
 .no-content {

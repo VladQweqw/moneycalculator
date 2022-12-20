@@ -1,13 +1,15 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext} from 'react'
 import { useNavigate } from 'react-router'
 import { BalanceContext } from '../context'
 import { motion } from 'framer-motion'
 import { currencyValues, currencyConvertor } from '../utils/functions'
 import { phrases } from '../utils/functions'
+import { SourceType } from '../utils/types'
 
 export default function Header() {
    const navigate = useNavigate()
-   const {totalBalance} = useContext(BalanceContext);   
+   const { sources } = useContext(BalanceContext);   
+   const balance = sources.reduce((acc: number, curr:SourceType) => acc + curr.total, 0)
    
    function getPhrase(balance: number) {
       if(balance <= 100) {
@@ -27,7 +29,7 @@ export default function Header() {
    return(
       <section className="header section">
          <h1 className="section-title">{
-               getPhrase(totalBalance) 
+               getPhrase(balance) 
          }, Vali</h1>
 
          <div className="total-wrapper">
@@ -56,13 +58,12 @@ export default function Header() {
                   }${values[to]}`
 
                   from++; to++;
-               }}>{
-                  totalBalance
+               }}>{balance
                }RON</motion.h1>
             </div>
 
             <button className="primary-btn add-payment" onClick={() => {
-               navigate('add')
+               navigate('add?type=payment')
             }}>Add payment</button>
          </div>
 

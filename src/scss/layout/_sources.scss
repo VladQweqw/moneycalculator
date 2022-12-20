@@ -1,0 +1,62 @@
+.sources {
+    display: grid;
+    gap: .5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+
+    .source {
+        background-color: #333837;
+        transition: 200ms ease;
+        outline: 2px solid transparent;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .remove-source {
+            display: grid;
+            place-items: center;
+            width: 25px;
+            height: 25px;
+
+            i {
+                cursor: pointer;
+                color: $gray;
+                transition: 200ms ease;
+            }
+            i:active {
+                scale: .9;
+            }
+            i:hover {
+                color: rgb(197, 33, 33);
+            }
+        }
+
+        .source-name {
+            color: $gray;
+        }
+
+        .source-total {
+            color: $accent;
+            font-size: 1.75rem;
+        }
+    }
+    .no-source {
+        background-color: transparent;
+        text-align: center;
+        justify-content: center;
+        font-weight: 300;
+        padding: 1rem;
+    }
+
+    .source:hover {
+        background-color: $contrast;
+        outline: 2px solid #333837;
+    }
+
+    .add-source {
+        width: 100%;
+    }
+
+}

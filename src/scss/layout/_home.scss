@@ -25,10 +25,11 @@
 
 .history {
     overflow-x: hidden;
-    max-height: 400px;
+    max-height: 500px;
     width: 100%;
     display: grid;
     gap: 1rem;
+    
     .history-section {
         position: relative;
         padding: 0;
@@ -57,6 +58,42 @@
     }
 
     .history-item-wrapper {
+        position: relative;
+
+        .history-item-context {
+            position: absolute;
+            top: 60%;
+            height: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 100px;
+            height: 50px;
+            border-radius: 2px;
+            background-color: $contrast;
+            transition: 200ms ease;
+            text-align: center;
+            opacity: 1;
+            display: grid;
+            place-items: center;
+            position: none;
+            color: red;
+            cursor: pointer;
+        }
+        .history-item-context:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .history-item-context-active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .currency-wrapper {
+            background-color: transparent;
+
+            .source-name {
+                color: $gray;
+                text-align: right;
+            }
+        }
 
         .history-item {
             display: flex;
@@ -64,7 +101,12 @@
             gap: .5rem;
             border-radius: 6px;
             justify-content: space-between;
-            padding: 1rem .5rem;
+            cursor: pointer;
+            padding: .25em .5rem;
+            transition: 200ms ease;
+        }
+        .history-item:hover {
+            transform: translateY(2px);
         }
 
         .item-date {
@@ -74,6 +116,10 @@
 
         .item-reason {
             font-size: calc(1rem + 1vmin);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 200px;
         }
         .item-total {
             font-size: calc(1rem + 1vmin);
@@ -150,6 +196,8 @@
 
 }
 
+
+
 .add-wrapper {
     background-color: #00000080;
     position: fixed;
@@ -198,28 +246,7 @@
                 
                 gap: .5rem;
 
-                #currency {
-                    outline: none;
-                    max-width: 75px;
-                    width: 100%;
-                    border: none;
-                    background-color: transparent;
-                    color: white;
-                    font-size: 1.15rem;
-                    outline: 2px solid $accent;
-                    border-radius: 4px;
-                    text-align: center;
-                    transition: 200ms ease;
 
-                    .currency-item {
-                        background-color: $contrast;
-                        outline: none;
-                        border: none;
-                    }
-                    .currency-item:hover {
-                        background-color: $accent;
-                    }
-                }
             }
 
 
@@ -282,6 +309,35 @@
     }
 }
 
+.select {
+    outline: none;
+    max-width: 75px;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 1.15rem;
+    outline: 2px solid $accent;
+    border-radius: 4px;
+    text-align: center;
+    transition: 200ms ease;
+
+    .currency-item {
+        background-color: $contrast;
+        outline: none;
+        border: none;
+    }
+    .currency-item:hover {
+        background-color: $accent;
+    }
+}
+#sources {
+    max-width: 100%;
+    padding: 1rem;
+}
+
 .total-money:active, .item-total:active {
     scale: 0.8;
 }
+
+
