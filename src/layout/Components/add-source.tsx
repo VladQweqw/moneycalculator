@@ -4,6 +4,7 @@ import { saveToLocal, getFromLocal } from '../../utils/functions'
 import { SourceType } from '../../utils/types'
 import { useContext } from 'react'
 import { BalanceContext } from '../../context'
+import Modal from './modal'
 
 export default function AddSource() {
     const total = useRef<HTMLInputElement | null>(null)
@@ -39,7 +40,8 @@ export default function AddSource() {
     }
 
    return(
-    <motion.div
+    <Modal>
+         <motion.div
     initial={{
         scale:0,
     }}
@@ -65,6 +67,7 @@ export default function AddSource() {
             }} id='add-payment'>Add</button>
         </form>
        
-    </motion.div>
+        </motion.div>
+    </Modal>
    )
 }

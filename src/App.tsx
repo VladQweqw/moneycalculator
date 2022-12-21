@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import {Route, Routes} from 'react-router'
 
 import Home from './layout/home'
-import Add from './layout/Components/add'
+import { Add } from './layout/Components/add'
 import CompleteHistory from './layout/History/completeHistory'
 import { BalanceContext } from './context'
 import { BrowserRouter } from 'react-router-dom'
 import NoContent from './layout/Components/noContent'
 import { SourceType, historyType } from './utils/types'
 import { getFromLocal } from './utils/functions'
+import Edit from './layout/Components/edit'
 
 export default function App() {
    const [history, setHistory] = useState<historyType | []>([])
@@ -39,6 +40,7 @@ export default function App() {
          <Routes>
                <Route path='/' element={<Home />}>
                   <Route path='add' element={<Add />}></Route>
+                  <Route path='edit' element={<Edit />}></Route>
                </Route>
                
                <Route path='/history' element={<CompleteHistory />}></Route>

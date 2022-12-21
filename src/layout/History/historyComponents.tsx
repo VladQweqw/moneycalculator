@@ -5,6 +5,9 @@ import { currencyConvertor, currencyValues, getDateFromMs, saveToLocal } from ".
 import { child, parent } from "../../utils/functions";
 import { useContext } from "react";
 import { BalanceContext } from "../../context";
+import { useNavigate } from "react-router";
+
+
 export const HistoryItem = (data: {
     removePayment: (date: number) => void,
     type: 'ADD' | 'SUBSTRACT',
@@ -14,57 +17,65 @@ export const HistoryItem = (data: {
     currency: string,
     source: string
 }): JSX.Element => {
-   let from = 0, to = 1;
-    const {type, reason, total, date, currency, source, removePayment} = data;
-
+    const {type, reason, total, date, source, removePayment, currency} = data;
     const [isOpen, setIsOpen] = useState(false)
+    const navigate = useNavigate();
     
+    let from = Object.keys(currencyValues).findIndex((item) => item === currency);
+    let to = from + 1;
     return(
         <motion.div
-        onMouseDown={(e) => {
-           if(
-            (e.target as HTMLElement).classList.contains('history-item-context') ||
-            (e.target as HTMLElement).classList.contains('fa-x')
-            ) {
-                removePayment(date)
-            }else {
-                setIsOpen(!isOpen)  
-
-            }
-
-        }}
         variants={child}
         className={`history-item-wrapper`}>
             <p className="item-date">
                 {getDateFromMs(date).hours}:{getDateFromMs(date).minutes}
             </p>
             <div 
+            onMouseDown={(e) => {                
+                if(
+                        (e.target as HTMLElement).classList.contains('history-item') || 
+                        (e.target as HTMLElement).classList.contains('item-reason')
+                    ) {
+                    setIsOpen(!isOpen)  
+                }
+            }}
             className={`history-item ${type ==='ADD' ? 'item-add': 'item-substract'}`}>
                 <h1 className="item-reason">{reason}</h1>
                 <div className="currency-wrapper">
                     <h1 className="item-total" onClick={(e) => {
-                        const elem = (e.target as HTMLElement);
                         const values = Object.keys(currencyValues);
-
-                        if(from == values.length - 1) to = 0
-                        if(from >= values.length) from = 0                    
+                        const elem = (e.target as HTMLElement);
                         
-                        elem.innerText = `+${
+                        if(from == values.length - 1) to = 0
+                        if(from >= values.length) from = 0
+                        
+                        elem.innerText = `${
                             currencyConvertor(
-                            parseFloat(elem.innerText.slice(1, -3)), values[from], values[to])
-                        }${values[to]}`
-
-                        from++; to++;                    
+                                Math.abs(parseFloat(elem.innerText.slice(0, -3))), values[from], values[to])
+                            }${values[to]}`
+                            
+                        from++; to++;                 
                     }}>
                     {type === 'ADD' ? '+': '-'}
                     {total}{currency}</h1>
                     <p className="source-name">{source || 'none'}</p>
                 </div>
+             
+                <div className={`${isOpen ? 'history-item-context history-item-context-active': 'history-item-context'}`}>
+                    <span className="remove-icon context-menu-item" onClick={() => 
+                        removePayment(date)
+                    }>
+                        <i className="fas fa-x"></i>
+                    </span>
+                    <span className="edit-icon context-menu-item" onClick={() => {
+                        navigate(`edit?id=${date}`)
+                    }}>
+                        <i className="fa-solid fa-ellipsis-vertical"></i>
+                    </span>
+                </div>
             </div>
 
-            <div className={`${isOpen ? 'history-item-context history-item-context-active': 'history-item-context'}`}>
-                <i className="fas fa-x"></i>
-            </div>
+           
         </motion.div>
     )
 

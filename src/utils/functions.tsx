@@ -9,7 +9,7 @@ export function currencyConvertor(total: number, from: string, to: string): stri
     
     let fromToRON = (total * currencyValues[from])
     convertedTotal = fromToRON / currencyValues[to];
-
+    
     return Number.parseFloat(convertedTotal.toString()).toFixed(2);
 }
 
