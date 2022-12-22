@@ -15,7 +15,7 @@ export default function Edit() {
     const source = useRef<HTMLSelectElement | null>(null)
     const [type, setType] = useState(0);
     
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams,] = useSearchParams();
     const id = searchParams.get('id');
     
     const [currentItem, setCurrentItem] = useState<historyType | null>(null)
@@ -34,20 +34,16 @@ export default function Edit() {
 
         let newSources = sources.map((data: SourceType) => {
             if(data.name === source) {
-                let value = total / currencyValues[currency] - currentItem?.total! / currencyValues[currentItem?.currency!]
-
-                if(type === 'ADD' && currentItem?.type === 'SUBSTRACT') {
-                    value = total;
-                }
-            
-                console.log(value);
+                let value = Math.abs(data.total - 2 * parseFloat(currencyConvertor(total, currency, 'RON')));
                 
+                if(type === 'ADD') {
+                    value = Math.abs(data.total + 2 * parseFloat(currencyConvertor(total, currency, 'RON')))
+                }
+                
+                console.log(value);
                 return {
                     name: data.name,
-                    total: data.total = type === 'ADD' ? 
-                        data.total + value
-                    : 
-                        data.total - value
+                    total: value
                 }
             }
             return data
@@ -58,26 +54,24 @@ export default function Edit() {
     }
 
     function editPayment() {
-        if(isNaN(parseInt(amount.current!.value))) return alert('add a number');
-        console.log(currencyRef.current!.value);
-        
+
         let obj: historyType = {
             type: !type ? 'ADD':'SUBSTRACT',
             reason: reason.current!.value || 'Spaga',
-            total: parseFloat(Math.abs(parseFloat(amount.current!.value)).toFixed(2))
-            ,
+            total: parseFloat(Math.abs(parseFloat(amount.current!.value)).toFixed(2)),
             date: new Date().getTime(),
             currency: currencyRef.current!.value,
             source: source.current!.value,  
         }
-        console.log(currentItem?.source, obj.source);
-        
-        const prevData = JSON.parse(getFromLocal('history')) || [];
-        const formatedData = prevData.filter((item: historyType) => item.date !== currentItem?.date)
-        
+
+        let formatedHistory = history.filter((item: historyType) => {
+            if(item.date !== currentItem?.date) return item;
+        })
+
         changeSources(obj)
-        setHistory([obj, ...formatedData]);
-        saveToLocal('history', JSON.stringify([obj, ...formatedData]))
+
+        setHistory([obj, ...formatedHistory])
+        saveToLocal('history', JSON.stringify([obj, ...formatedHistory]));
     }
     
    return(

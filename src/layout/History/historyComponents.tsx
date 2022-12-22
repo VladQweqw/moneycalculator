@@ -1,4 +1,4 @@
-import { historyType } from "../../utils/types";
+import { SourceType, historyType } from "../../utils/types";
 import {  useState } from "react";
 import { motion } from 'framer-motion'
 import { currencyConvertor, currencyValues, getDateFromMs, saveToLocal } from "../../utils/functions";
@@ -9,7 +9,6 @@ import { useNavigate } from "react-router";
 
 
 export const HistoryItem = (data: {
-    removePayment: (date: number) => void,
     type: 'ADD' | 'SUBSTRACT',
     reason: string,
     total: number,
@@ -17,12 +16,40 @@ export const HistoryItem = (data: {
     currency: string,
     source: string
 }): JSX.Element => {
-    const {type, reason, total, date, source, removePayment, currency} = data;
+    const {type, reason, total, date, source, currency} = data;
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate();
+    const { sources, history, setHistory, setSources } = useContext(BalanceContext)
     
     let from = Object.keys(currencyValues).findIndex((item) => item === currency);
     let to = from + 1;
+
+    function removePayment() {
+
+        let changed = sources.map((item: SourceType) => {
+            if(item.name === source) {
+                let convertedValue =  parseFloat(currencyConvertor(total, currency, 'RON'))
+                console.log(convertedValue, total);
+                
+                return {
+                    name: item.name,
+                    total: type === 'ADD' ? Math.abs(item.total - convertedValue) : Math.abs(item.total + convertedValue)
+                }
+            }else {
+                return item
+            }
+        })
+        
+        const newPayments = history.filter((item: historyType) => {
+            return item.date !== date
+        })
+
+        saveToLocal('history', JSON.stringify(newPayments))
+        saveToLocal('sources', JSON.stringify(changed))
+        setHistory(newPayments)
+        setSources(changed)
+    }
+
     return(
         <motion.div
         variants={child}
@@ -63,12 +90,12 @@ export const HistoryItem = (data: {
              
                 <div className={`${isOpen ? 'history-item-context history-item-context-active': 'history-item-context'}`}>
                     <span className="remove-icon context-menu-item" onClick={() => 
-                        removePayment(date)
+                        removePayment()
                     }>
                         <i className="fas fa-x"></i>
                     </span>
                     <span className="edit-icon context-menu-item" onClick={() => {
-                        // navigate(`edit?id=${date}`)
+                        navigate(`edit?id=${date}`)
                     }}>
                         <i className="fa-solid fa-ellipsis-vertical"></i>
                     </span>
@@ -82,8 +109,7 @@ export const HistoryItem = (data: {
 }
 
 export const HistoryComponent = (data: any) => {        
-    const { setHistory } = useContext(BalanceContext)
-
+    
     const dates = data.data?.reduce(
         (acc: any, cur: historyType) => {            
             let dateFormat = getDateFromMs(cur.date).stringDate();
@@ -107,17 +133,6 @@ export const HistoryComponent = (data: any) => {
     },{})
 
     const datesArr = dates && Object.entries(dates);
-    
-    function removePayment(date: number) {
-        
-        const newPayments = data.data.filter((item: historyType) => {
-            return item.date !== date
-        })
-
-        saveToLocal('history', JSON.stringify(newPayments))
-        setHistory(newPayments)
-        
-    }
 
     return(
         <div
@@ -141,7 +156,7 @@ export const HistoryComponent = (data: any) => {
                                 initial={'initial'}
                             className="history-items">
                                 {item[1].logs.map((item: historyType, index: number) => {
-                                    return <HistoryItem key={index} removePayment={removePayment} {...item} />
+                                    return <HistoryItem key={index}  {...item} />
                                 })}
                             </motion.div>
                         </div>

@@ -1,7 +1,7 @@
 import {useRef, useState, useContext} from 'react'
 import { motion} from 'framer-motion'
 import { BalanceContext } from '../../context'
-import { saveToLocal, getFromLocal, currencyValues } from '../../utils/functions'
+import { saveToLocal, getFromLocal, currencyValues, currencyConvertor } from '../../utils/functions'
 import { historyType, SourceType } from '../../utils/types'
 import AddSource from './add-source'
 import { useSearchParams } from 'react-router-dom'
@@ -9,20 +9,27 @@ import Modal from './modal'
 
 export function Add() {
     const {setHistory, sources, setSources} = useContext(BalanceContext);
-    const [searchParams, uSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const addType = searchParams.get('type')
 
     function changeSources(data: historyType) {
-        const { total, type, source} = data;
+        const { type, source} = data;
 
         let newSources = sources.map((data: SourceType) => {
             if(data.name === source) {
+
+                let convertedValue = parseFloat(
+                    currencyConvertor(
+                        Math.abs(parseFloat(amount.current!.value)), currencyRef.current!.value, 'RON'
+                    )
+                )                
+
                 return {
                     name: data.name,
                     total: data.total = type === 'ADD' ? 
-                        data.total + (Math.abs(parseFloat(amount.current!.value)) * currencyValues[currencyRef.current!.value])
+                        data.total + convertedValue
                     : 
-                        data.total - (Math.abs(parseFloat(amount.current!.value)) * currencyValues[currencyRef.current!.value])
+                        data.total - convertedValue
                 }
             }
             return data
