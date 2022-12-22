@@ -63,7 +63,7 @@ function Source(data: {
     return <motion.div variants={child} className="source">
         <span>
             <p className="source-name">{name}</p>
-            <h1 className="source-total">{total}RON</h1>
+            <h1 className="source-total">{total.toFixed(2)}RON</h1>
         </span>
 
         <span className="remove-source" onClick={() => {

@@ -9,7 +9,7 @@ export default function History() {
    
    if(history == false) return <NoContent />
    return(
-    <section className="history section">
+    <section className="history-section section">
         <header className="section-header">
             <h1 className="section-title">History</h1>
             <Link to={'/history'}><h1 className="section-title section-optional" id='see-all'>See all</h1></Link>

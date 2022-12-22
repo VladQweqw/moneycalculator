@@ -38,6 +38,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1vw;
+  overflow-x: hidden !important;
+  max-width: 100% !important;
 }
 
 #root {
@@ -46,8 +48,9 @@ body {
   gap: 2rem;
   padding: 1rem 0;
   max-width: 600px;
-  min-height: 100vh;
+  min-height: 95vh;
   width: 100%;
+  overflow-x: hidden !important;
 }
 
 #main {
@@ -56,6 +59,7 @@ body {
   justify-content: space-between;
   gap: 1rem;
   min-height: 95vh;
+  overflow-x: hidden !important;
 }
 
 .section {
@@ -162,8 +166,8 @@ body {
   width: 100%;
   display: grid;
   gap: 1rem;
-  overflow-x: hidden;
-  overflow: scroll;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 .history .history-section {
   position: relative;
@@ -256,7 +260,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 50vw;
+  width: 40vmin;
 }
 .history .history-item-wrapper .item-total {
   font-size: calc(1rem + 1vmin);
@@ -279,6 +283,7 @@ body {
 }
 .complete-history-wrapper .history {
   height: 100%;
+  max-height: 100%;
 }
 .complete-history-wrapper .history .history-item-wrapper {
   height: auto;

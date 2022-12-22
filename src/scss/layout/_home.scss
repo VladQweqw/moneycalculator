@@ -28,9 +28,8 @@
     width: 100%;
     display: grid;
     gap: 1rem;
-    overflow-x: hidden;
-    overflow: scroll;
-   
+    overflow: hidden;
+    overflow-y: scroll;
 
     
     .history-section {
@@ -47,8 +46,6 @@
             z-index: 999;
             padding: .5rem;    
             background-color: $contrast;
-
-
         }
 
 
@@ -139,7 +136,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 50vw;
+            width: 40vmin;
         }
         .item-total {
             font-size: calc(1rem + 1vmin);
@@ -167,6 +164,8 @@
     
     .history {
         height: 100%;
+        max-height: 100%;
+
         .history-item-wrapper  {
             height: auto;
         }
@@ -211,8 +210,6 @@
 
 
 }
-
-
 
 .add-wrapper {
     background-color: #00000080;

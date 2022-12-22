@@ -49,7 +49,7 @@ export const HistoryItem = (data: {
                         if(from == values.length - 1) to = 0
                         if(from >= values.length) from = 0
                         
-                        elem.innerText = `${
+                        elem.innerText = `${type === 'ADD' ? '+': '-'}${
                             currencyConvertor(
                                 Math.abs(parseFloat(elem.innerText.slice(0, -3))), values[from], values[to])
                             }${values[to]}`
@@ -68,7 +68,7 @@ export const HistoryItem = (data: {
                         <i className="fas fa-x"></i>
                     </span>
                     <span className="edit-icon context-menu-item" onClick={() => {
-                        navigate(`edit?id=${date}`)
+                        // navigate(`edit?id=${date}`)
                     }}>
                         <i className="fa-solid fa-ellipsis-vertical"></i>
                     </span>

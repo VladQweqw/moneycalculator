@@ -58,7 +58,7 @@ export default function Header() {
                   }${values[to]}`
 
                   from++; to++;
-               }}>{balance
+               }}>{balance.toFixed(2)
                }RON</motion.h1>
             </div>
 
