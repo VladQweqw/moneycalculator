@@ -34,63 +34,48 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1vw;
     overflow-x: hidden !important;
     max-width: 100% !important;
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem 0;
-    max-width: 600px;
+    display: grid;
+    grid-template-rows: 200px;
+    gap: 5rem;
+    max-width: 500px;
     min-height: 95vh;
     width: 100%;
     overflow-x: hidden !important;
 }
 
-#main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1rem;
-    min-height: 95vh;
-    overflow-x: hidden !important;
-}
+
 .section {
-    display: grid;
-    gap: 5px;
+    position: relative;
+    // margin-top: 50px;
+    padding: .5rem;
     
-    div {
+    
+    .section-container {
         background-color: $contrast;
         border-radius: 8px;
         padding: .5em;
-        
-    }
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        padding: 1vw;
-        align-items: center;
-
-        .section-optional {
-            cursor: pointer;
-            font-size: 1rem;
-            color: gray;
-            transition: 200ms ease;
-        }
-        
-        .section-optional:hover {
-            color: $accent;
-        }
+            
     }
 
     .section-title {
-        font-size: 1rem;
-        font-size: 1.25rem;
+        position: absolute;
+        color: #FFFFFF40;
+        font-size: 5rem;
         font-weight: 400;
+        top: -10px;
+        z-index: -1;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
+}
+.section:first-child {
+    margin-top: 0;
+    padding: 0;
 }
 
 .primary-btn {
@@ -101,10 +86,9 @@ body {
     padding: .6em 1em;
     cursor: pointer;
     width: fit-content;
-    background: linear-gradient(90deg, #294ECE 0%, #4789AD 100%);
+    background: $gradient;
     font-size: 1.15rem;
-    background-size: 400%;
-    background-position: 10%;
+ 
     transition: 200ms ease;
 }
 .primary-btn:hover {

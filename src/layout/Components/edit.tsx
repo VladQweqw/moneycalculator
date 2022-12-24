@@ -40,7 +40,6 @@ export default function Edit() {
                     value = Math.abs(data.total + 2 * parseFloat(currencyConvertor(total, currency, 'RON')))
                 }
                 
-                console.log(value);
                 return {
                     name: data.name,
                     total: value

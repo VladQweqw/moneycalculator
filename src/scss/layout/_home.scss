@@ -1,37 +1,85 @@
-.total-wrapper {
-    display: flex;
-    gap: .5rem;
-    justify-content: space-between;
-    align-items: center;
+
+.header {
+    text-align: center;
+    position: relative;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 150px 50px;
     
+    span {
+        display:inline-block
+    }
+
+    .letter-wrapper {
+        overflow: hidden;
+    }
+
+    #header-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        
+
+    }
+
     .total {
+        position: relative;
+        z-index: 1;
+        padding-top: calc(.1rem + 2vw);
+
         .total-title {
-            font-size: calc(1rem + 1vmin);
+            font-size: calc(1rem);
             color: $gray;
             font-weight: 400;
         }
         .total-money {
-            font-size: calc(1.25rem + 2vmin);
+            font-size: calc(1.75rem + 3vmin);
             cursor: pointer;
             transition: 200ms ease;
+            color: white;
         }
     }
 
     .add-payment {
         font-size: calc(.75rem + 1vmin);
+        margin: 0 auto;
+        padding: 1em 2em;
+        transition: 200ms ease;
+    }
+    .add-payment:active {
+        scale: .9;
     }
 
 }
 
+.history-wrapper {
+    display: grid;
+    grid-template-rows: 25px auto;
+    
+    .section-optional {
+        font-size: 1rem;
+        color: $gray;
+        padding: 1vw;
+        text-align: right;
+        font-weight: 400;
+        transition: 200ms ease;
+    }
+    .section-optional:hover {
+        color: $accent;
+    }
+    
+}
 .history {
-    max-height: 500px;
     width: 100%;
     display: grid;
     gap: 1rem;
     overflow: hidden;
+    height: 500px;
     overflow-y: scroll;
-
+    padding: 1vw;
     
+
     .history-section {
         position: relative;
         padding: 0;
@@ -44,8 +92,17 @@
             position: sticky;
             top: -10px;
             z-index: 999;
-            padding: .5rem;    
             background-color: $contrast;
+            padding: .5rem 0 .25rem 0;
+            width: 100%;
+
+            .history-section-title {
+                font-weight: 400;
+            }
+
+            .history-section-total {
+                color: $accent;
+            }
         }
 
 
@@ -53,7 +110,10 @@
             padding: 0;
             display: grid;
             outline: 1px solid $gray;
+            gap: 1rem;
             max-height: 100%;
+            padding: 1vw;
+            border-radius: 4px;
         }
     }
 
@@ -75,7 +135,7 @@
             border-radius: 6px;
             justify-content: space-between;
             cursor: pointer;
-            padding: .25em .5rem;
+            padding: .5rem;
             transition: 200ms ease;
             position: relative;
         }

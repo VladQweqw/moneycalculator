@@ -1,18 +1,22 @@
 .sources {
     display: grid;
-    gap: .5rem;
+    gap: 1rem;
+    grid-template-rows: 60px;
     overflow-y: auto;
     overflow-x: hidden;
+    min-height: calc(120px + 1rem);
+    position: relative;
     max-height: 300px;
 
     .source {
-        background-color: #333837;
+        background-color: $light;
         transition: 200ms ease;
-        outline: 2px solid transparent;
         cursor: pointer;
         display: flex;
+        padding: .5rem;
         justify-content: space-between;
         align-items: center;
+        border-radius: 6px;
 
         .remove-source {
             display: grid;
@@ -50,13 +54,9 @@
         padding: 1rem;
     }
 
-    .source:hover {
-        background-color: $contrast;
-        outline: 2px solid #333837;
-    }
-
     .add-source {
         width: 100%;
+        
     }
 
 }

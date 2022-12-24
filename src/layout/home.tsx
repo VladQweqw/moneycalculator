@@ -9,12 +9,12 @@ export default function Home() {
    const { history } = useContext(BalanceContext)
 
    return(
-    <main id='main'>
+       <>
         <Outlet />
         <Header />
         <HistoryComponent {...history} />
         {/* <Top /> */}
         <Sources />
-    </main>
+        </>
    )
 }

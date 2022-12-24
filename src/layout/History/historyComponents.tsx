@@ -136,7 +136,7 @@ export const HistoryComponent = (data: any) => {
 
     return(
         <div
-        className="history">
+        className="history ">
             {
                 datesArr?.map((item: any, index: number) => {      
                                   

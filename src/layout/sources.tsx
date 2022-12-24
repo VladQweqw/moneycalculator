@@ -29,15 +29,15 @@ export default function Sources() {
      variants={parent}
      animate={'animate'}
      initial={'initial'}
-    className="sources">
+    className="sources section-container">
+            <button className="add-source primary-btn" onClick={() => {
+            navigate('add?type=source')
+        }} id='add-source'>Add</button>
         
         {sources.length ? sources.map((data: SourceType, index: number) => {
             return <Source {...data} removeSource={removeSource}  key={index} />
         }): <NoSource />}
 
-        <button className="add-source primary-btn" onClick={() => {
-            navigate('add?type=source')
-        }} id='add-source'>Add</button>
     </motion.div>
 
   </section>
