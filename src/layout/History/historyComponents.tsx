@@ -8,14 +8,7 @@ import { BalanceContext } from "../../context";
 import { useNavigate } from "react-router";
 
 
-export const HistoryItem = (data: {
-    type: 'ADD' | 'SUBSTRACT',
-    reason: string,
-    total: number,
-    date: number,
-    currency: string,
-    source: string
-}): JSX.Element => {
+export const HistoryItem = (data: historyType): JSX.Element => {
     const {type, reason, total, date, source, currency} = data;
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate();

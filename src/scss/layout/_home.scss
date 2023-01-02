@@ -243,33 +243,6 @@
 
     }
 }
-.top-wrapper {
-    display: grid;
-    gap: 1rem;
-    background-color: transparent !important;    
-    padding: 0 !important;
-
-    .top-item-wrapper {
-        background-color: transparent;
-    }
-    
-    .top-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem .5rem;
-
-        .item-main {
-            color: $accent;
-        }
-
-        .item-main-total {
-            font-size: 1.25rem;
-        }
-    }
-
-
-}
 
 .add-wrapper {
     background-color: #00000080;
