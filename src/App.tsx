@@ -2,19 +2,15 @@ import { useState, useEffect } from 'react'
 import {Route, Routes} from 'react-router'
 
 import Home from './layout/home'
-import CompleteHistory from './layout/History/completeHistory'
 import NoContent from './layout/Components/noContent'
-import Edit from './layout/Components/edit'
 import { Add } from './layout/Components/add'
 import { BalanceContext } from './context'
 import { BrowserRouter } from 'react-router-dom'
-import { SourceType, historyType } from './utils/types'
+import { historyType } from './utils/types'
 import { getFromLocal } from './utils/functions'
 
 export default function App() {
    const [history, setHistory] = useState<historyType | []>([])
-   const [tops, setTops] = useState<historyType | []>([])
-   const [sources, setSources] = useState<SourceType[] | []>([])
 
    useEffect(() => {
       getData()
@@ -22,28 +18,20 @@ export default function App() {
    
    function getData() {
       setHistory(JSON.parse(getFromLocal('history')) || []);
-      setTops(JSON.parse(getFromLocal('tops')) || []);
-      setSources(JSON.parse(getFromLocal('sources')) || [])
    }
 
    return(
     <BalanceContext.Provider value={{
       history,
       setHistory,
-      tops,
-      setTops,
       getData,
-      setSources,
-      sources,
     }}>
       <BrowserRouter>
          <Routes>
                <Route path='/' element={<Home />}>
                   <Route path='add' element={<Add />}></Route>
-                  <Route path='edit' element={<Edit />}></Route>
                </Route>
                
-               <Route path='/history' element={<CompleteHistory />}></Route>
                <Route path='/tops'></Route>         
             <Route path='*' element={<NoContent />}></Route>
          </Routes>

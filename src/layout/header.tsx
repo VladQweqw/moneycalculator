@@ -1,9 +1,9 @@
 import {useContext, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router'
 import { BalanceContext } from '../context'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { currencyValues, currencyConvertor } from '../utils/functions'
-import { SourceType } from '../utils/types'
+import { historyType } from '../utils/types'
 
 const container = {
    hidden: {
@@ -30,7 +30,7 @@ const container = {
 
 export default function Header() {
    const navigate = useNavigate()
-   const { sources } = useContext(BalanceContext);   
+   const { history } = useContext(BalanceContext);   
    const [balanceText, setBalanceText] = useState<any>([])
    const [state, setState] = useState('hidden')
    const [balance, setBalance] = useState<number>(0);
@@ -39,9 +39,9 @@ export default function Header() {
    
    useEffect(() => {
       setBalance(
-         sources.reduce((acc: number, curr:SourceType) => acc + curr.total, 0)
+         history.reduce((acc: number, curr: historyType) => acc + curr.total, 0)
          )
-      }, [sources])
+      }, [history])
       
       
    useEffect(() => {

@@ -4,13 +4,6 @@ export type historyType = {
     reason: string,
     total: number,
     date: number,
-    currency: string,
-    source: string,
-}
-
-export type SourceType = {
-    name: string,
-    total: number
 }
 
 export type historyCollection = {
@@ -18,4 +11,3 @@ export type historyCollection = {
     logs: historyType[];
 
 }
-export type currencyType = 'RON' | 'EUR' | 'USD';

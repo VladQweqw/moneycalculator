@@ -12,7 +12,7 @@ export default function Modal(props: any) {
     animate={{
         opacity:1
     }}
-    className="add-wrapper"   onClick={(e) => {
+    className="add-wrapper"   onClick={(e: any) => {
         if((e.target as HTMLElement).classList.contains('add-wrapper')) {
             navigate(-1)
         }        

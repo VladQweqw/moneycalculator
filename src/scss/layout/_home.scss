@@ -54,8 +54,7 @@
 }
 
 .history-wrapper {
-    display: grid;
-    grid-template-rows: 25px auto;
+
     
     .section-optional {
         font-size: 1rem;
@@ -135,7 +134,7 @@
             border-radius: 6px;
             justify-content: space-between;
             cursor: pointer;
-            padding: .5rem;
+            padding: .75rem .5rem;
             transition: 200ms ease;
             position: relative;
         }
@@ -257,12 +256,15 @@
     z-index: 99999999999;
     
     .add-container {
+        max-width: 400px;
+        width: 100%;
         padding: 1rem;
         background-color: $contrast;
         border-radius: 8px;
     
         .add-form {
             display: grid;
+            width: 100%;
             gap: 1.5rem;
             
             .input {

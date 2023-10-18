@@ -1,47 +1,14 @@
-import { SourceType, historyType } from "../../utils/types";
+import { historyType } from "../../utils/types";
 import {  useState } from "react";
 import { motion } from 'framer-motion'
-import { currencyConvertor, currencyValues, getDateFromMs, saveToLocal } from "../../utils/functions";
+import { currencyConvertor, currencyValues, getDateFromMs } from "../../utils/functions";
 import { child, parent } from "../../utils/functions";
-import { useContext } from "react";
-import { BalanceContext } from "../../context";
-import { useNavigate } from "react-router";
 
 
 export const HistoryItem = (data: historyType): JSX.Element => {
-    const {type, reason, total, date, source, currency} = data;
+    const {type, reason, total, date} = data;
     const [isOpen, setIsOpen] = useState(false)
-    const navigate = useNavigate();
-    const { sources, history, setHistory, setSources } = useContext(BalanceContext)
     
-    let from = Object.keys(currencyValues).findIndex((item) => item === currency);
-    let to = from + 1;
-
-    function removePayment() {
-
-        let changed = sources.map((item: SourceType) => {
-            if(item.name === source) {
-                let convertedValue =  parseFloat(currencyConvertor(total, currency, 'RON'))
-                console.log(convertedValue, total);
-                
-                return {
-                    name: item.name,
-                    total: type === 'ADD' ? Math.abs(item.total - convertedValue) : Math.abs(item.total + convertedValue)
-                }
-            }else {
-                return item
-            }
-        })
-        
-        const newPayments = history.filter((item: historyType) => {
-            return item.date !== date
-        })
-
-        saveToLocal('history', JSON.stringify(newPayments))
-        saveToLocal('sources', JSON.stringify(changed))
-        setHistory(newPayments)
-        setSources(changed)
-    }
 
     return(
         <motion.div
@@ -62,36 +29,8 @@ export const HistoryItem = (data: historyType): JSX.Element => {
             className={`history-item ${type ==='ADD' ? 'item-add': 'item-substract'}`}>
                 <h1 className="item-reason">{reason}</h1>
                 <div className="currency-wrapper">
-                    <h1 className="item-total" onClick={(e) => {
-                        const values = Object.keys(currencyValues);
-                        const elem = (e.target as HTMLElement);
-                        
-                        if(from == values.length - 1) to = 0
-                        if(from >= values.length) from = 0
-                        
-                        elem.innerText = `${type === 'ADD' ? '+': '-'}${
-                            currencyConvertor(
-                                Math.abs(parseFloat(elem.innerText.slice(0, -3))), values[from], values[to])
-                            }${values[to]}`
-                            
-                        from++; to++;                 
-                    }}>
-                    {type === 'ADD' ? '+': '-'}
-                    {total}{currency}</h1>
-                    <p className="source-name">{source || 'none'}</p>
-                </div>
-             
-                <div className={`${isOpen ? 'history-item-context history-item-context-active': 'history-item-context'}`}>
-                    <span className="remove-icon context-menu-item" onClick={() => 
-                        removePayment()
-                    }>
-                        <i className="fas fa-x"></i>
-                    </span>
-                    <span className="edit-icon context-menu-item" onClick={() => {
-                        navigate(`edit?id=${date}`)
-                    }}>
-                        <i className="fa-solid fa-ellipsis-vertical"></i>
-                    </span>
+                    <h1 className="item-total">
+                    {total}RON</h1>
                 </div>
             </div>
 
@@ -110,14 +49,14 @@ export const HistoryComponent = (data: any) => {
             if(acc[dateFormat]?.date) {                
                 acc[dateFormat].logs = [...acc[dateFormat].logs, cur] 
                 if(cur.type === 'ADD') {
-                    acc[dateFormat].total += cur.total * currencyValues[cur.currency]
+                    acc[dateFormat].total += cur.total
                 }else {
-                    acc[dateFormat].total -= cur.total * currencyValues[cur.currency]
+                    acc[dateFormat].total -= cur.total
                 }
             }else {
                 acc[dateFormat] = {
                     date: cur.date,
-                    total: cur.type === 'ADD' ? cur.total * currencyValues[cur.currency] : -cur.total * currencyValues[cur.currency],
+                    total: cur.type === 'ADD' ? cur.total : -cur.total,
                     logs: [cur]
                 };
             }
